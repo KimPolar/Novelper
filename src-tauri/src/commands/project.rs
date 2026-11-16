@@ -1,7 +1,10 @@
-use crate::db::{open_project_connection, project_repo, ActiveProject, AppState, DbError};
+use crate::db::{
+    open_project_connection, project_repo, version_repo, ActiveProject, AppState, DbError,
+};
 use crate::domain::{
-    CreateDocumentInput, CreateProjectInput, DocumentDetail, DocumentTreeItem, FtsSearchHit,
-    ProjectDetail, ProjectSummary, ReorderItem, UpdateDocumentInput,
+    CreateDocumentInput, CreateProjectInput, DiffLine, DocumentDetail, DocumentTreeItem,
+    DocumentVersionItem, FtsSearchHit, ProjectDetail, ProjectStats, ProjectSummary, ReorderItem,
+    UpdateDocumentInput,
 };
 use std::path::PathBuf;
 use tauri::State;
@@ -141,4 +144,56 @@ pub fn search_documents_fts(
         .as_ref()
         .ok_or_else(|| DbError::NoActiveProject.to_string())?;
     project_repo::search_documents_fts(&proj.conn, &query).map_err(map_err)
+}
+
+#[tauri::command]
+pub fn create_document_version(
+    state: State<'_, AppState>,
+    doc_id: String,
+    snapshot_type: String,
+    note: Option<String>,
+) -> Result<DocumentVersionItem, String> {
+    let active = state.active_project.lock().map_err(|e| e.to_string())?;
+    let proj = active
+        .as_ref()
+        .ok_or_else(|| DbError::NoActiveProject.to_string())?;
+    version_repo::create_document_version(&proj.conn, &doc_id, &snapshot_type, note).map_err(map_err)
+}
+
+#[tauri::command]
+pub fn list_document_versions(
+    state: State<'_, AppState>,
+    doc_id: String,
+) -> Result<Vec<DocumentVersionItem>, String> {
+    let active = state.active_project.lock().map_err(|e| e.to_string())?;
+    let proj = active
+        .as_ref()
+        .ok_or_else(|| DbError::NoActiveProject.to_string())?;
+    version_repo::list_document_versions(&proj.conn, &doc_id).map_err(map_err)
+}
+
+#[tauri::command]
+pub fn restore_document_version(
+    state: State<'_, AppState>,
+    version_id: String,
+) -> Result<DocumentDetail, String> {
+    let active = state.active_project.lock().map_err(|e| e.to_string())?;
+    let proj = active
+        .as_ref()
+        .ok_or_else(|| DbError::NoActiveProject.to_string())?;
+    version_repo::restore_document_version(&proj.conn, &version_id).map_err(map_err)
+}
+
+#[tauri::command]
+pub fn compute_line_diff(old_text: String, new_text: String) -> Vec<DiffLine> {
+    version_repo::compute_line_diff(&old_text, &new_text)
+}
+
+#[tauri::command]
+pub fn get_project_stats(state: State<'_, AppState>) -> Result<ProjectStats, String> {
+    let active = state.active_project.lock().map_err(|e| e.to_string())?;
+    let proj = active
+        .as_ref()
+        .ok_or_else(|| DbError::NoActiveProject.to_string())?;
+    version_repo::get_project_stats(&proj.conn, &proj.project_id).map_err(map_err)
 }

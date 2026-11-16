@@ -46,6 +46,20 @@
     "monologue": "Monologue",
     "flashback": "Flashback"
   },
+  "search": {
+    "button": "Search (Ctrl+K)",
+    "placeholder": "Search manuscript or titles...",
+    "noResults": "No matching scenes found."
+  },
+  "versions": {
+    "button": "Versions",
+    "title": "Document Versions & Diff",
+    "createSnapshot": "Save Snapshot",
+    "notePlaceholder": "Version note (optional)",
+    "restore": "Restore",
+    "empty": "No saved snapshots yet.",
+    "diffTitle": "Diff against current manuscript"
+  },
   "language": {
     "label": "Language",
     "ko": "한국어",

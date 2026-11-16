@@ -1,5 +1,6 @@
 pub mod migrations;
 pub mod project_repo;
+pub mod version_repo;
 
 use rusqlite::Connection;
 use std::path::{Path, PathBuf};

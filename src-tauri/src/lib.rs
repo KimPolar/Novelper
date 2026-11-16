@@ -37,6 +37,11 @@ pub fn run() {
             commands::project::reorder_documents,
             commands::project::set_document_trashed,
             commands::project::search_documents_fts,
+            commands::project::create_document_version,
+            commands::project::list_document_versions,
+            commands::project::restore_document_version,
+            commands::project::compute_line_diff,
+            commands::project::get_project_stats,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

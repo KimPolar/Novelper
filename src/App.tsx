@@ -1,7 +1,9 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { BookOpen, Globe, X } from "lucide-react";
+import { BookOpen, Globe, History, Search, X } from "lucide-react";
 import { NovelEditor } from "@/components/editor/NovelEditor";
+import { SearchModal } from "@/components/editor/SearchModal";
+import { VersionHistoryDrawer } from "@/components/editor/VersionHistoryDrawer";
 import { ProjectSidebar } from "@/components/tree/ProjectSidebar";
 import { useEditorUiStore } from "@/stores/editorUiStore";
 import { useProjectStore } from "@/stores/projectStore";
@@ -12,10 +14,23 @@ export function App() {
   const { documents, activeDocument, isSaving, loadProjects, selectDocument } =
     useProjectStore();
   const { openTabIds, focusMode, closeTab } = useEditorUiStore();
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [versionsOpen, setVersionsOpen] = useState(false);
 
   useEffect(() => {
     loadProjects();
   }, [loadProjects]);
+
+  useEffect(() => {
+    const onKeyDown = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "k") {
+        e.preventDefault();
+        setSearchOpen((v) => !v);
+      }
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, []);
 
   const toggleLanguage = () => {
     const next = i18n.language === "ko" ? "en" : "ko";
@@ -31,11 +46,34 @@ export function App() {
             <span className="font-semibold tracking-tight">{t("app.name")}</span>
             <span className="text-xs text-zinc-500">{t("app.subtitle")}</span>
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2">
             {activeDocument && (
-              <span className="text-xs text-zinc-500">
+              <span className="mr-2 text-xs text-zinc-500">
                 {isSaving ? t("editor.saving") : t("editor.saved")}
               </span>
+            )}
+            <button
+              type="button"
+              onClick={() => setSearchOpen(true)}
+              className="flex items-center gap-1.5 rounded-md border border-zinc-800 bg-zinc-900 px-2.5 py-1 text-xs text-zinc-300 hover:border-zinc-700 hover:bg-zinc-800 transition-colors"
+            >
+              <Search className="h-3.5 w-3.5" />
+              <span>{t("search.button")}</span>
+            </button>
+            {activeDocument && (
+              <button
+                type="button"
+                onClick={() => setVersionsOpen((v) => !v)}
+                className={cn(
+                  "flex items-center gap-1.5 rounded-md border border-zinc-800 px-2.5 py-1 text-xs transition-colors",
+                  versionsOpen
+                    ? "bg-amber-500/20 text-amber-300 border-amber-500/40"
+                    : "bg-zinc-900 text-zinc-300 hover:border-zinc-700 hover:bg-zinc-800"
+                )}
+              >
+                <History className="h-3.5 w-3.5" />
+                <span>{t("versions.button")}</span>
+              </button>
             )}
             <button
               type="button"
@@ -107,7 +145,16 @@ export function App() {
             </div>
           )}
         </main>
+
+        {!focusMode && (
+          <VersionHistoryDrawer
+            open={versionsOpen}
+            onClose={() => setVersionsOpen(false)}
+          />
+        )}
       </div>
+
+      <SearchModal open={searchOpen} onClose={() => setSearchOpen(false)} />
     </div>
   );
 }

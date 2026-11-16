@@ -46,6 +46,20 @@
     "monologue": "독백",
     "flashback": "회상"
   },
+  "search": {
+    "button": "검색 (Ctrl+K)",
+    "placeholder": "원고 내용 또는 제목 검색...",
+    "noResults": "검색 결과가 없습니다."
+  },
+  "versions": {
+    "button": "버전 이력",
+    "title": "문서 버전 및 변경점 비교",
+    "createSnapshot": "스냅샷 저장",
+    "notePlaceholder": "버전 메모 (선택)",
+    "restore": "이 버전으로 복원",
+    "empty": "저장된 버전 스냅샷이 없습니다.",
+    "diffTitle": "현재 원고와 비교"
+  },
   "language": {
     "label": "언어",
     "ko": "한국어",

@@ -111,6 +111,34 @@ pub struct FtsSearchHit {
     pub snippet: String,
 }
 
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct DocumentVersionItem {
+    pub id: String,
+    pub document_id: String,
+    pub revision: i64,
+    pub snapshot_type: String,
+    pub note: Option<String>,
+    pub plain_text: String,
+    pub created_at: String,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
+#[serde(rename_all = "camelCase")]
+pub struct DiffLine {
+    pub kind: String, // "equal" | "insert" | "delete"
+    pub text: String,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct ProjectStats {
+    pub total_chars_with_space: i64,
+    pub total_chars_no_space: i64,
+    pub total_word_count: i64,
+    pub scene_count: i64,
+}
+
 /// 한국어(공백 포함/제외) 및 영어 단어 수를 계산합니다.
 pub fn compute_text_stats(plain_text: &str) -> (i64, i64, i64) {
     let chars_with_space = plain_text.chars().count() as i64;

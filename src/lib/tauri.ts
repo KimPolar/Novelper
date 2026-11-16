@@ -52,6 +52,28 @@ export interface FtsSearchHit {
   snippet: string;
 }
 
+export interface DocumentVersionItem {
+  id: string;
+  documentId: string;
+  revision: number;
+  snapshotType: string;
+  note?: string | null;
+  plainText: string;
+  createdAt: string;
+}
+
+export interface DiffLine {
+  kind: "equal" | "insert" | "delete" | string;
+  text: string;
+}
+
+export interface ProjectStats {
+  totalCharsWithSpace: number;
+  totalCharsNoSpace: number;
+  totalWordCount: number;
+  sceneCount: number;
+}
+
 export const tauriApi = {
   listProjects: () => invoke<ProjectSummary[]>("list_projects"),
   createProject: (input: {
@@ -85,4 +107,21 @@ export const tauriApi = {
     invoke<void>("set_document_trashed", { docId, trashed }),
   searchDocumentsFts: (query: string) =>
     invoke<FtsSearchHit[]>("search_documents_fts", { query }),
+  createDocumentVersion: (
+    docId: string,
+    snapshotType = "manual",
+    note?: string
+  ) =>
+    invoke<DocumentVersionItem>("create_document_version", {
+      docId,
+      snapshotType,
+      note,
+    }),
+  listDocumentVersions: (docId: string) =>
+    invoke<DocumentVersionItem[]>("list_document_versions", { docId }),
+  restoreDocumentVersion: (versionId: string) =>
+    invoke<DocumentDetail>("restore_document_version", { versionId }),
+  computeLineDiff: (oldText: string, newText: string) =>
+    invoke<DiffLine[]>("compute_line_diff", { oldText, newText }),
+  getProjectStats: () => invoke<ProjectStats>("get_project_stats"),
 };
