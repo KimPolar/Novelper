@@ -57,6 +57,10 @@ pub fn run() {
             commands::ai::save_task_binding,
             commands::ai::stream_ai_chat,
             commands::ai::cancel_ai_request,
+            commands::ai::create_ai_proposal,
+            commands::ai::list_ai_proposals,
+            commands::ai::apply_ai_proposal,
+            commands::ai::reject_ai_proposal,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { BookOpen, Cpu, Globe, History, Search, X } from "lucide-react";
+import { BookOpen, Cpu, Globe, History, Search, Sparkles, X } from "lucide-react";
+import { AIAssistantDrawer } from "@/components/ai/AIAssistantDrawer";
 import { AISettingsModal } from "@/components/ai/AISettingsModal";
 import { NovelEditor } from "@/components/editor/NovelEditor";
 import { SearchModal } from "@/components/editor/SearchModal";
@@ -18,6 +19,7 @@ export function App() {
   const [searchOpen, setSearchOpen] = useState(false);
   const [versionsOpen, setVersionsOpen] = useState(false);
   const [aiSettingsOpen, setAiSettingsOpen] = useState(false);
+  const [aiDrawerOpen, setAiDrawerOpen] = useState(false);
 
   useEffect(() => {
     loadProjects();
@@ -77,6 +79,19 @@ export function App() {
                 <span>{t("versions.button")}</span>
               </button>
             )}
+            <button
+              type="button"
+              onClick={() => setAiDrawerOpen((v) => !v)}
+              className={cn(
+                "flex items-center gap-1.5 rounded-md border border-zinc-800 px-2.5 py-1 text-xs transition-colors",
+                aiDrawerOpen
+                  ? "bg-amber-500/20 text-amber-300 border-amber-500/40"
+                  : "bg-zinc-900 text-zinc-300 hover:border-zinc-700 hover:bg-zinc-800"
+              )}
+            >
+              <Sparkles className="h-3.5 w-3.5 text-amber-400" />
+              <span>{t("aiPanel.button")}</span>
+            </button>
             <button
               type="button"
               onClick={() => setAiSettingsOpen(true)}
@@ -160,6 +175,12 @@ export function App() {
           <VersionHistoryDrawer
             open={versionsOpen}
             onClose={() => setVersionsOpen(false)}
+          />
+        )}
+        {!focusMode && (
+          <AIAssistantDrawer
+            open={aiDrawerOpen}
+            onClose={() => setAiDrawerOpen(false)}
           />
         )}
       </div>

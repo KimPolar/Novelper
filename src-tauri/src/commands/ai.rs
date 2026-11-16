@@ -3,7 +3,8 @@ use crate::ai::{
     repo as ai_repo, secrets, AIError, AIEvent, AIModelInfo, AIProviderConfig, AIRequest,
     ModelCapabilities, ProtocolKind, TaskBinding,
 };
-use crate::db::AppState;
+use crate::db::{proposal_repo, AppState, DbError};
+use crate::domain::DocumentDetail;
 use serde::{Deserialize, Serialize};
 use std::time::Instant;
 use tauri::ipc::Channel;
@@ -263,4 +264,64 @@ pub async fn stream_ai_chat(
 #[tauri::command]
 pub fn cancel_ai_request(ai_mgr: State<'_, AIProviderManager>, request_id: String) -> bool {
     ai_mgr.cancel_request(&request_id)
+}
+
+#[tauri::command]
+pub fn create_ai_proposal(
+    state: State<'_, AppState>,
+    doc_id: String,
+    target_block_id: String,
+    original_text: String,
+    proposed_text: String,
+    rationale: Option<String>,
+) -> Result<proposal_repo::AIProposal, String> {
+    let active = state.active_project.lock().map_err(|e| e.to_string())?;
+    let proj = active
+        .as_ref()
+        .ok_or_else(|| DbError::NoActiveProject.to_string())?;
+    proposal_repo::create_proposal(
+        &proj.conn,
+        &doc_id,
+        &target_block_id,
+        &original_text,
+        &proposed_text,
+        rationale,
+    )
+    .map_err(|e| e.to_string())
+}
+
+#[tauri::command]
+pub fn list_ai_proposals(
+    state: State<'_, AppState>,
+    doc_id: String,
+) -> Result<Vec<proposal_repo::AIProposal>, String> {
+    let active = state.active_project.lock().map_err(|e| e.to_string())?;
+    let proj = active
+        .as_ref()
+        .ok_or_else(|| DbError::NoActiveProject.to_string())?;
+    proposal_repo::list_proposals(&proj.conn, &doc_id).map_err(|e| e.to_string())
+}
+
+#[tauri::command]
+pub fn apply_ai_proposal(
+    state: State<'_, AppState>,
+    proposal_id: String,
+) -> Result<DocumentDetail, String> {
+    let active = state.active_project.lock().map_err(|e| e.to_string())?;
+    let proj = active
+        .as_ref()
+        .ok_or_else(|| DbError::NoActiveProject.to_string())?;
+    proposal_repo::apply_proposal(&proj.conn, &proposal_id).map_err(|e| e.to_string())
+}
+
+#[tauri::command]
+pub fn reject_ai_proposal(
+    state: State<'_, AppState>,
+    proposal_id: String,
+) -> Result<(), String> {
+    let active = state.active_project.lock().map_err(|e| e.to_string())?;
+    let proj = active
+        .as_ref()
+        .ok_or_else(|| DbError::NoActiveProject.to_string())?;
+    proposal_repo::reject_proposal(&proj.conn, &proposal_id).map_err(|e| e.to_string())
 }

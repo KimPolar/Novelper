@@ -57,6 +57,19 @@ export interface ConnectionTestResult {
   message: string;
 }
 
+export interface AIProposal {
+  id: string;
+  documentId: string;
+  baseRevision: number;
+  targetBlockId: string;
+  originalText: string;
+  proposedText: string;
+  rationale?: string | null;
+  status: "pending" | "accepted" | "rejected" | "stale" | string;
+  isStale: boolean;
+  createdAt: string;
+}
+
 export type AIEvent =
   | { type: "text_delta"; delta: string }
   | { type: "reasoning_delta"; delta: string }
@@ -251,4 +264,17 @@ export const tauriApi = {
   },
   cancelAiRequest: (requestId: string) =>
     invoke<boolean>("cancel_ai_request", { requestId }),
+  createAiProposal: (params: {
+    docId: string;
+    targetBlockId: string;
+    originalText: string;
+    proposedText: string;
+    rationale?: string;
+  }) => invoke<AIProposal>("create_ai_proposal", params),
+  listAiProposals: (docId: string) =>
+    invoke<AIProposal[]>("list_ai_proposals", { docId }),
+  applyAiProposal: (proposalId: string) =>
+    invoke<DocumentDetail>("apply_ai_proposal", { proposalId }),
+  rejectAiProposal: (proposalId: string) =>
+    invoke<void>("reject_ai_proposal", { proposalId }),
 };

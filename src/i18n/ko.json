@@ -88,5 +88,25 @@
       "rerank": "검색 결과 정렬",
       "chat": "일반 AI 채팅"
     }
+  },
+  "aiPanel": {
+    "button": "AI 보조",
+    "tabChat": "집필 채팅",
+    "tabProposals": "수정 제안",
+    "noModel": "AI 설정에서 모델을 먼저 등록해 주세요.",
+    "localBlocked": "로컬 전용 모드가 활성화되어 클라우드 모델 호출이 차단되었습니다.",
+    "cloudNotice": "클라우드 API 전송 안내: 현재 장면 본문과 관련 설정이 외부 서버로 전송됩니다.",
+    "promptPlaceholder": "현재 장면에 대해 질문하거나 수정을 요청하세요...",
+    "send": "전송",
+    "stop": "중단",
+    "saveProposal": "수정 제안으로 보내기",
+    "apply": "적용",
+    "reject": "거절",
+    "staleWarning": "원고가 수정되어 오래된 제안입니다 (적용 불가)",
+    "noProposals": "검토 대기 중인 AI 수정 제안이 없습니다.",
+    "quickNext": "다음 문장",
+    "quickExpand": "장면 확장",
+    "quickPolish": "문체 다듬기",
+    "quickProofread": "맞춤법 교정"
   }
 }

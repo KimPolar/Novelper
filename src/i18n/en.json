@@ -88,5 +88,25 @@
       "rerank": "Search Reranking",
       "chat": "General AI Chat"
     }
+  },
+  "aiPanel": {
+    "button": "AI Assistant",
+    "tabChat": "Writing Chat",
+    "tabProposals": "Proposals",
+    "noModel": "Please register a model in AI Settings first.",
+    "localBlocked": "Local-Only Mode is active; cloud model calls are blocked.",
+    "cloudNotice": "Cloud Transfer Notice: Current scene text and relevant context will be sent externally.",
+    "promptPlaceholder": "Ask about this scene or request edits...",
+    "send": "Send",
+    "stop": "Stop",
+    "saveProposal": "Save as Proposal",
+    "apply": "Apply",
+    "reject": "Reject",
+    "staleWarning": "Manuscript changed since proposal was created (stale)",
+    "noProposals": "No pending AI proposals.",
+    "quickNext": "Next Sentence",
+    "quickExpand": "Expand Scene",
+    "quickPolish": "Polish Style",
+    "quickProofread": "Proofread"
   }
 }
