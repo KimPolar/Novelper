@@ -70,6 +70,61 @@ export interface AIProposal {
   createdAt: string;
 }
 
+export interface CharacterItem {
+  id: string;
+  projectId: string;
+  name: string;
+  role?: string | null;
+  profileJson?: string | null;
+  updatedAt: string;
+}
+
+export interface LocationItem {
+  id: string;
+  projectId: string;
+  name: string;
+  description?: string | null;
+  updatedAt: string;
+}
+
+export interface WorldbuildingItem {
+  id: string;
+  projectId: string;
+  category: string;
+  title: string;
+  content: string;
+  updatedAt: string;
+}
+
+export interface TimelineEventItem {
+  id: string;
+  projectId: string;
+  documentId?: string | null;
+  sequenceIndex: number;
+  inStoryTime?: string | null;
+  title: string;
+  summary?: string | null;
+}
+
+export interface FactItem {
+  id: string;
+  projectId: string;
+  subjectType: string;
+  subjectId: string;
+  factText: string;
+  certainty: "confirmed" | "inferred" | "conflict" | string;
+  evidenceDocId?: string | null;
+  evidenceBlockId?: string | null;
+  evidenceQuote?: string | null;
+  createdAt: string;
+}
+
+export interface BuiltContext {
+  contextText: string;
+  estimatedTokens: number;
+  includedSections: string[];
+}
+
 export type AIEvent =
   | { type: "text_delta"; delta: string }
   | { type: "reasoning_delta"; delta: string }
@@ -277,4 +332,50 @@ export const tauriApi = {
     invoke<DocumentDetail>("apply_ai_proposal", { proposalId }),
   rejectAiProposal: (proposalId: string) =>
     invoke<void>("reject_ai_proposal", { proposalId }),
+
+  // Worldbuilding & Context Engine
+  listCharacters: () => invoke<CharacterItem[]>("list_characters"),
+  upsertCharacter: (params: {
+    id?: string;
+    name: string;
+    role?: string;
+    profileJson?: string;
+  }) => invoke<CharacterItem>("upsert_character", params),
+  listLocations: () => invoke<LocationItem[]>("list_locations"),
+  upsertLocation: (params: {
+    id?: string;
+    name: string;
+    description?: string;
+  }) => invoke<LocationItem>("upsert_location", params),
+  listWorldbuilding: () => invoke<WorldbuildingItem[]>("list_worldbuilding"),
+  upsertWorldbuilding: (params: {
+    id?: string;
+    category: string;
+    title: string;
+    content: string;
+  }) => invoke<WorldbuildingItem>("upsert_worldbuilding", params),
+  listTimelineEvents: () => invoke<TimelineEventItem[]>("list_timeline_events"),
+  upsertTimelineEvent: (params: {
+    id?: string;
+    documentId?: string;
+    sequenceIndex: number;
+    inStoryTime?: string;
+    title: string;
+    summary?: string;
+  }) => invoke<TimelineEventItem>("upsert_timeline_event", params),
+  listFacts: () => invoke<FactItem[]>("list_facts"),
+  addFact: (params: {
+    subjectType: string;
+    subjectId: string;
+    factText: string;
+    certainty: string;
+    evidenceDocId?: string;
+    evidenceBlockId?: string;
+    evidenceQuote?: string;
+  }) => invoke<FactItem>("add_fact", params),
+  buildSceneContext: (params: {
+    docId?: string;
+    query?: string;
+    tokenBudget?: number;
+  }) => invoke<BuiltContext>("build_scene_context_cmd", params),
 };

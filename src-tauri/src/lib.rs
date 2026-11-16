@@ -1,5 +1,6 @@
 pub mod ai;
 pub mod commands;
+pub mod context;
 pub mod db;
 pub mod domain;
 
@@ -61,6 +62,17 @@ pub fn run() {
             commands::ai::list_ai_proposals,
             commands::ai::apply_ai_proposal,
             commands::ai::reject_ai_proposal,
+            commands::world::list_characters,
+            commands::world::upsert_character,
+            commands::world::list_locations,
+            commands::world::upsert_location,
+            commands::world::list_worldbuilding,
+            commands::world::upsert_worldbuilding,
+            commands::world::list_timeline_events,
+            commands::world::upsert_timeline_event,
+            commands::world::list_facts,
+            commands::world::add_fact,
+            commands::world::build_scene_context_cmd,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { BookOpen, Cpu, Globe, History, Search, Sparkles, X } from "lucide-react";
+import { BookMarked, BookOpen, Cpu, Globe, History, Search, Sparkles, X } from "lucide-react";
 import { AIAssistantDrawer } from "@/components/ai/AIAssistantDrawer";
 import { AISettingsModal } from "@/components/ai/AISettingsModal";
 import { NovelEditor } from "@/components/editor/NovelEditor";
 import { SearchModal } from "@/components/editor/SearchModal";
 import { VersionHistoryDrawer } from "@/components/editor/VersionHistoryDrawer";
 import { ProjectSidebar } from "@/components/tree/ProjectSidebar";
+import { WorldbuildingModal } from "@/components/world/WorldbuildingModal";
 import { useEditorUiStore } from "@/stores/editorUiStore";
 import { useProjectStore } from "@/stores/projectStore";
 import { cn } from "@/lib/utils";
@@ -20,6 +21,7 @@ export function App() {
   const [versionsOpen, setVersionsOpen] = useState(false);
   const [aiSettingsOpen, setAiSettingsOpen] = useState(false);
   const [aiDrawerOpen, setAiDrawerOpen] = useState(false);
+  const [worldOpen, setWorldOpen] = useState(false);
 
   useEffect(() => {
     loadProjects();
@@ -79,6 +81,14 @@ export function App() {
                 <span>{t("versions.button")}</span>
               </button>
             )}
+            <button
+              type="button"
+              onClick={() => setWorldOpen(true)}
+              className="flex items-center gap-1.5 rounded-md border border-zinc-800 bg-zinc-900 px-2.5 py-1 text-xs text-zinc-300 hover:border-zinc-700 hover:bg-zinc-800 transition-colors"
+            >
+              <BookMarked className="h-3.5 w-3.5 text-amber-400" />
+              <span>{t("world.button")}</span>
+            </button>
             <button
               type="button"
               onClick={() => setAiDrawerOpen((v) => !v)}
@@ -189,6 +199,10 @@ export function App() {
       <AISettingsModal
         open={aiSettingsOpen}
         onClose={() => setAiSettingsOpen(false)}
+      />
+      <WorldbuildingModal
+        open={worldOpen}
+        onClose={() => setWorldOpen(false)}
       />
     </div>
   );

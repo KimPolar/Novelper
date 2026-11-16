@@ -108,5 +108,16 @@
     "quickExpand": "장면 확장",
     "quickPolish": "문체 다듬기",
     "quickProofread": "맞춤법 교정"
+  },
+  "world": {
+    "button": "설정집",
+    "title": "작품 설정집 · Context Engine",
+    "characters": "등장인물",
+    "locations": "장소",
+    "worldbuilding": "세계관",
+    "timeline": "사건 연표",
+    "facts": "확정 설정·충돌 근거",
+    "add": "추가",
+    "jumpToEvidence": "근거 장면으로 이동"
   }
 }

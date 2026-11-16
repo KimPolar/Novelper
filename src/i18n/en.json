@@ -108,5 +108,16 @@
     "quickExpand": "Expand Scene",
     "quickPolish": "Polish Style",
     "quickProofread": "Proofread"
+  },
+  "world": {
+    "button": "Worldbuilding",
+    "title": "Worldbuilding & Context Engine",
+    "characters": "Characters",
+    "locations": "Locations",
+    "worldbuilding": "Worldbuilding",
+    "timeline": "Timeline",
+    "facts": "Grounded Facts & Conflicts",
+    "add": "Add",
+    "jumpToEvidence": "Jump to Evidence"
   }
 }

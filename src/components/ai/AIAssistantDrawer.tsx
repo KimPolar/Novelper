@@ -92,9 +92,19 @@ export function AIAssistantDrawer({ open, onClose }: AIAssistantDrawerProps) {
     setIsStreaming(true);
 
     const projectLang = activeProject?.language === "en" ? "English" : "Korean";
-    const sceneContext = activeDocument
-      ? `\n\n[Current Scene: ${activeDocument.title}]\n${activeDocument.plainText}`
-      : "";
+    let builtContextText = "";
+    try {
+      const ctx = await tauriApi.buildSceneContext({
+        docId: activeDocument?.id,
+        query: text,
+        tokenBudget: 6000,
+      });
+      builtContextText = ctx.contextText;
+    } catch {
+      builtContextText = activeDocument
+        ? `[Current Scene: ${activeDocument.title}]\n${activeDocument.plainText}`
+        : "";
+    }
 
     try {
       await tauriApi.streamAiChat(
@@ -104,7 +114,7 @@ export function AIAssistantDrawer({ open, onClose }: AIAssistantDrawerProps) {
           taskType: "chat",
           request: {
             modelId: selectedModel.modelId,
-            system: `You are Novelper, an expert novel writing assistant. Respond in ${projectLang}.${sceneContext}`,
+            system: `You are Novelper, an expert novel writing assistant. Respond in ${projectLang}.\n\n${builtContextText}`,
             messages: [...messages, userMsg],
             tools: [],
           },
