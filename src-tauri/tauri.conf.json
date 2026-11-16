@@ -1,8 +1,8 @@
 {
   "$schema": "https://schema.tauri.dev/config/2",
-  "productName": "Novel Studio",
+  "productName": "Novelper",
   "version": "0.1.0",
-  "identifier": "com.novelstudio.app",
+  "identifier": "com.novelper.app",
   "build": {
     "beforeDevCommand": "pnpm dev",
     "devUrl": "http://localhost:1420",
@@ -12,7 +12,7 @@
   "app": {
     "windows": [
       {
-        "title": "소설도우미 · Novel Studio",
+        "title": "Novelper",
         "width": 1400,
         "height": 900,
         "minWidth": 1024,

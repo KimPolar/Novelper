@@ -1,6 +1,6 @@
 {
   "app": {
-    "name": "Novel Studio",
+    "name": "Novelper",
     "subtitle": "Offline-first AI Novel Writing Studio"
   },
   "nav": {
@@ -9,13 +9,36 @@
     "aiChat": "AI Assistant",
     "settings": "Settings"
   },
+  "project": {
+    "selectOrCreate": "Select or Create Project",
+    "newProject": "New Project",
+    "titlePlaceholder": "Project title...",
+    "create": "Create",
+    "cancel": "Cancel",
+    "addChapter": "Add Chapter",
+    "addScene": "Add Scene",
+    "addNote": "Add Note",
+    "trash": "Trash",
+    "restore": "Restore",
+    "moveToTrash": "Move to Trash",
+    "emptyProject": "Create a new project to start writing."
+  },
   "editor": {
     "untitledScene": "Untitled Scene",
     "placeholder": "Begin your story...",
     "focusMode": "Focus Mode",
     "typewriterMode": "Typewriter Mode",
     "saved": "Saved",
-    "saving": "Saving..."
+    "saving": "Saving...",
+    "charsWithSpace": "Chars (w/ space)",
+    "charsNoSpace": "Chars (no space)",
+    "words": "Words"
+  },
+  "status": {
+    "draft": "Draft",
+    "writing": "Writing",
+    "revising": "Revising",
+    "done": "Done"
   },
   "language": {
     "label": "Language",

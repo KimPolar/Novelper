@@ -1,6 +1,6 @@
 {
   "app": {
-    "name": "소설도우미",
+    "name": "Novelper",
     "subtitle": "Offline-first AI 소설 집필 스튜디오"
   },
   "nav": {
@@ -9,13 +9,36 @@
     "aiChat": "AI 어시스턴트",
     "settings": "설정"
   },
+  "project": {
+    "selectOrCreate": "작품 선택 또는 생성",
+    "newProject": "새 작품",
+    "titlePlaceholder": "작품 제목 (예: 잊혀진 별의 기록)",
+    "create": "만들기",
+    "cancel": "취소",
+    "addChapter": "장 추가",
+    "addScene": "장면 추가",
+    "addNote": "노트 추가",
+    "trash": "폐기 장면 보관함",
+    "restore": "복원",
+    "moveToTrash": "보관함으로 이동",
+    "emptyProject": "새 작품을 만들어 집필을 시작하세요."
+  },
   "editor": {
     "untitledScene": "제목 없는 장면",
     "placeholder": "이야기를 시작하세요...",
     "focusMode": "집중 모드",
     "typewriterMode": "타자기 모드",
     "saved": "저장됨",
-    "saving": "저장 중..."
+    "saving": "저장 중...",
+    "charsWithSpace": "공백 포함",
+    "charsNoSpace": "공백 제외",
+    "words": "단어"
+  },
+  "status": {
+    "draft": "초안",
+    "writing": "집필 중",
+    "revising": "수정 중",
+    "done": "완료"
   },
   "language": {
     "label": "언어",

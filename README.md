@@ -1,4 +1,4 @@
-# 소설도우미 (Novel Studio)
+# Novelper
 
 Offline-first 소설 전문 에디터 + Multi-Provider AI 집필 보조 + 작품 설정 관리(Context Engine) 데스크톱 애플리케이션입니다.
 

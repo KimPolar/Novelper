@@ -1,3 +1,10 @@
+pub mod commands;
+pub mod db;
+pub mod domain;
+
+use db::AppState;
+use tauri::Manager;
+
 #[tauri::command]
 fn app_info() -> serde_json::Value {
     serde_json::json!({
@@ -9,7 +16,28 @@ fn app_info() -> serde_json::Value {
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     tauri::Builder::default()
-        .invoke_handler(tauri::generate_handler![app_info])
+        .setup(|app| {
+            let data_dir = app
+                .path()
+                .app_data_dir()
+                .expect("failed to resolve app data dir");
+            let state = AppState::init(data_dir).expect("failed to initialize app database");
+            app.manage(state);
+            Ok(())
+        })
+        .invoke_handler(tauri::generate_handler![
+            app_info,
+            commands::project::list_projects,
+            commands::project::create_project,
+            commands::project::open_project,
+            commands::project::list_documents,
+            commands::project::get_document,
+            commands::project::create_document,
+            commands::project::update_document,
+            commands::project::reorder_documents,
+            commands::project::set_document_trashed,
+            commands::project::search_documents_fts,
+        ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
