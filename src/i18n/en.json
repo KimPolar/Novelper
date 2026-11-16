@@ -40,6 +40,12 @@
     "revising": "Revising",
     "done": "Done"
   },
+  "preset": {
+    "body": "Body",
+    "dialogue": "Dialogue",
+    "monologue": "Monologue",
+    "flashback": "Flashback"
+  },
   "language": {
     "label": "Language",
     "ko": "한국어",

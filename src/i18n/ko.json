@@ -40,6 +40,12 @@
     "revising": "수정 중",
     "done": "완료"
   },
+  "preset": {
+    "body": "소설 본문",
+    "dialogue": "대화문",
+    "monologue": "독백",
+    "flashback": "회상"
+  },
   "language": {
     "label": "언어",
     "ko": "한국어",

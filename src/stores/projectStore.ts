@@ -6,6 +6,7 @@ import {
   ProjectSummary,
   tauriApi,
 } from "@/lib/tauri";
+import { useEditorUiStore } from "@/stores/editorUiStore";
 
 interface ProjectState {
   projects: ProjectSummary[];
@@ -99,6 +100,7 @@ export const useProjectStore = create<ProjectState>((set, get) => ({
   selectDocument: async (docId) => {
     try {
       const activeDocument = await tauriApi.getDocument(docId);
+      useEditorUiStore.getState().openTab(docId);
       set({ activeDocument, error: null });
     } catch (err) {
       set({ error: String(err) });

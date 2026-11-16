@@ -11,6 +11,13 @@
   },
   "dependencies": {
     "@tauri-apps/api": "^2.2.0",
+    "@tiptap/extension-paragraph": "^3.34.0",
+    "@tiptap/extension-placeholder": "^3.34.0",
+    "@tiptap/extension-text-align": "^3.34.0",
+    "@tiptap/extension-underline": "^3.34.0",
+    "@tiptap/pm": "^3.34.0",
+    "@tiptap/react": "^3.34.0",
+    "@tiptap/starter-kit": "^3.34.0",
     "clsx": "^2.1.1",
     "i18next": "^24.2.0",
     "lucide-react": "^0.475.0",
