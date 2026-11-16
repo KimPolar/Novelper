@@ -64,5 +64,29 @@
     "label": "언어",
     "ko": "한국어",
     "en": "English"
+  },
+  "aiSettings": {
+    "button": "AI 설정",
+    "title": "AI 제공자 및 모델 관리",
+    "localOnly": "로컬 AI 전용 모드 (외부 전송 차단)",
+    "addProvider": "새 제공자 / API 연결 추가",
+    "providerNamePlaceholder": "연결 이름 (예: Local LM Studio, OpenAI)",
+    "apiKeyPlaceholder": "API Key (OS 보안 저장소에 암호화 보관)",
+    "isLocal": "로컬 서버 (외부 전송 없음)",
+    "saveProvider": "연결 저장",
+    "configuredProviders": "등록된 AI 연결",
+    "testConnection": "연결 테스트",
+    "syncModels": "모델 불러오기",
+    "customModelPlaceholder": "수동 등록할 모델 ID (예: qwen3:8b)",
+    "addCustomModel": "모델 등록",
+    "taskRouting": "작업별 기본 모델 지정",
+    "tasks": {
+      "draft": "소설 초안 생성",
+      "proofread": "문장 교정",
+      "consistency_check": "설정 충돌 검토",
+      "embedding": "작품 검색 (임베딩)",
+      "rerank": "검색 결과 정렬",
+      "chat": "일반 AI 채팅"
+    }
   }
 }

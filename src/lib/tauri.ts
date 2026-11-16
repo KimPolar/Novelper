@@ -1,4 +1,69 @@
-import { invoke } from "@tauri-apps/api/core";
+import { Channel, invoke } from "@tauri-apps/api/core";
+
+export type ProtocolKind =
+  | "openai_chat"
+  | "openai_responses"
+  | "anthropic_messages"
+  | "gemini_interactions"
+  | "gemini_generate_content"
+  | "ollama_native"
+  | "openai_compat";
+
+export interface ModelCapabilities {
+  streaming: boolean;
+  vision: boolean;
+  toolCalling: boolean;
+  structuredOutput: boolean;
+  reasoning: boolean;
+  promptCaching: boolean;
+  contextWindow?: number;
+  maxOutputTokens?: number;
+}
+
+export interface AIProviderConfig {
+  id: string;
+  name: string;
+  protocol: ProtocolKind;
+  baseUrl?: string | null;
+  secretRef?: string | null;
+  extraHeaders?: Record<string, string> | null;
+  timeoutMs: number;
+  maxRetries: number;
+  isLocal: boolean;
+  enabled: boolean;
+}
+
+export interface AIModelInfo {
+  id: string;
+  providerId: string;
+  modelId: string;
+  displayName: string;
+  capabilities: ModelCapabilities;
+  defaultOptions?: Record<string, unknown> | null;
+  isCustom: boolean;
+}
+
+export interface TaskBinding {
+  taskType: string;
+  primaryModelId?: string | null;
+  fallbackModelIds: string[];
+  allowExternalFallback: boolean;
+}
+
+export interface ConnectionTestResult {
+  ok: boolean;
+  latencyMs: number;
+  modelCount: number;
+  message: string;
+}
+
+export type AIEvent =
+  | { type: "text_delta"; delta: string }
+  | { type: "reasoning_delta"; delta: string }
+  | { type: "tool_call"; id: string; name: string; arguments_json: string }
+  | { type: "usage"; input_tokens: number; output_tokens: number }
+  | { type: "done"; finish_reason: string; provider_meta: unknown }
+  | { type: "error"; code: string; message: string; retryable: boolean };
 
 export interface ProjectSummary {
   id: string;
@@ -124,4 +189,66 @@ export const tauriApi = {
   computeLineDiff: (oldText: string, newText: string) =>
     invoke<DiffLine[]>("compute_line_diff", { oldText, newText }),
   getProjectStats: () => invoke<ProjectStats>("get_project_stats"),
+
+  // AI Provider & Model Management
+  listAiProviders: () => invoke<AIProviderConfig[]>("list_ai_providers"),
+  saveAiProvider: (input: {
+    id?: string;
+    name: string;
+    protocol: ProtocolKind;
+    baseUrl?: string;
+    apiKey?: string;
+    timeoutMs?: number;
+    maxRetries?: number;
+    isLocal: boolean;
+    enabled: boolean;
+  }) => invoke<AIProviderConfig>("save_ai_provider", { input }),
+  deleteAiProvider: (providerId: string) =>
+    invoke<void>("delete_ai_provider", { providerId }),
+  testAiProviderConnection: (providerId: string) =>
+    invoke<ConnectionTestResult>("test_ai_provider_connection", { providerId }),
+  syncProviderModels: (providerId: string) =>
+    invoke<AIModelInfo[]>("sync_provider_models", { providerId }),
+  addCustomModel: (
+    providerId: string,
+    modelId: string,
+    displayName: string,
+    capabilities?: ModelCapabilities
+  ) =>
+    invoke<AIModelInfo>("add_custom_model", {
+      providerId,
+      modelId,
+      displayName,
+      capabilities,
+    }),
+  listAiModels: (providerId?: string) =>
+    invoke<AIModelInfo[]>("list_ai_models", { providerId }),
+  deleteAiModel: (modelId: string) =>
+    invoke<void>("delete_ai_model", { modelId }),
+  listTaskBindings: () => invoke<TaskBinding[]>("list_task_bindings"),
+  saveTaskBinding: (binding: TaskBinding) =>
+    invoke<void>("save_task_binding", { binding }),
+  streamAiChat: (
+    params: {
+      requestId: string;
+      modelRecordId: string;
+      taskType: string;
+      request: {
+        modelId: string;
+        system?: string;
+        messages: Array<{ role: string; content: string }>;
+        temperature?: number;
+        maxTokens?: number;
+        tools: unknown[];
+        providerOptions?: Record<string, unknown>;
+      };
+    },
+    onEvent: (ev: AIEvent) => void
+  ) => {
+    const channel = new Channel<AIEvent>();
+    channel.onmessage = onEvent;
+    return invoke<void>("stream_ai_chat", { ...params, onEvent: channel });
+  },
+  cancelAiRequest: (requestId: string) =>
+    invoke<boolean>("cancel_ai_request", { requestId }),
 };

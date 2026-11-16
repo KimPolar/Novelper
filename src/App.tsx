@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { BookOpen, Globe, History, Search, X } from "lucide-react";
+import { BookOpen, Cpu, Globe, History, Search, X } from "lucide-react";
+import { AISettingsModal } from "@/components/ai/AISettingsModal";
 import { NovelEditor } from "@/components/editor/NovelEditor";
 import { SearchModal } from "@/components/editor/SearchModal";
 import { VersionHistoryDrawer } from "@/components/editor/VersionHistoryDrawer";
@@ -16,6 +17,7 @@ export function App() {
   const { openTabIds, focusMode, closeTab } = useEditorUiStore();
   const [searchOpen, setSearchOpen] = useState(false);
   const [versionsOpen, setVersionsOpen] = useState(false);
+  const [aiSettingsOpen, setAiSettingsOpen] = useState(false);
 
   useEffect(() => {
     loadProjects();
@@ -75,6 +77,14 @@ export function App() {
                 <span>{t("versions.button")}</span>
               </button>
             )}
+            <button
+              type="button"
+              onClick={() => setAiSettingsOpen(true)}
+              className="flex items-center gap-1.5 rounded-md border border-zinc-800 bg-zinc-900 px-2.5 py-1 text-xs text-zinc-300 hover:border-zinc-700 hover:bg-zinc-800 transition-colors"
+            >
+              <Cpu className="h-3.5 w-3.5 text-amber-400" />
+              <span>{t("aiSettings.button")}</span>
+            </button>
             <button
               type="button"
               onClick={toggleLanguage}
@@ -155,6 +165,10 @@ export function App() {
       </div>
 
       <SearchModal open={searchOpen} onClose={() => setSearchOpen(false)} />
+      <AISettingsModal
+        open={aiSettingsOpen}
+        onClose={() => setAiSettingsOpen(false)}
+      />
     </div>
   );
 }

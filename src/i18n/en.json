@@ -64,5 +64,29 @@
     "label": "Language",
     "ko": "한국어",
     "en": "English"
+  },
+  "aiSettings": {
+    "button": "AI Settings",
+    "title": "AI Providers & Model Routing",
+    "localOnly": "Local-Only Mode (Block Cloud API)",
+    "addProvider": "Add New Provider / API Connection",
+    "providerNamePlaceholder": "Connection name (e.g. Local LM Studio, OpenAI)",
+    "apiKeyPlaceholder": "API Key (stored in OS Credential Store)",
+    "isLocal": "Local server (no external transfer)",
+    "saveProvider": "Save Connection",
+    "configuredProviders": "Configured Providers",
+    "testConnection": "Test Connection",
+    "syncModels": "Fetch Models",
+    "customModelPlaceholder": "Custom model ID (e.g. qwen3:8b)",
+    "addCustomModel": "Add Model",
+    "taskRouting": "Default Model per Task",
+    "tasks": {
+      "draft": "Draft Generation",
+      "proofread": "Proofreading",
+      "consistency_check": "Consistency Check",
+      "embedding": "Semantic Search (Embedding)",
+      "rerank": "Search Reranking",
+      "chat": "General AI Chat"
+    }
   }
 }

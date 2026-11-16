@@ -3,6 +3,7 @@ pub mod commands;
 pub mod db;
 pub mod domain;
 
+use ai::manager::AIProviderManager;
 use db::AppState;
 use tauri::Manager;
 
@@ -24,6 +25,7 @@ pub fn run() {
                 .expect("failed to resolve app data dir");
             let state = AppState::init(data_dir).expect("failed to initialize app database");
             app.manage(state);
+            app.manage(AIProviderManager::new());
             Ok(())
         })
         .invoke_handler(tauri::generate_handler![
@@ -43,6 +45,18 @@ pub fn run() {
             commands::project::restore_document_version,
             commands::project::compute_line_diff,
             commands::project::get_project_stats,
+            commands::ai::list_ai_providers,
+            commands::ai::save_ai_provider,
+            commands::ai::delete_ai_provider,
+            commands::ai::test_ai_provider_connection,
+            commands::ai::sync_provider_models,
+            commands::ai::add_custom_model,
+            commands::ai::list_ai_models,
+            commands::ai::delete_ai_model,
+            commands::ai::list_task_bindings,
+            commands::ai::save_task_binding,
+            commands::ai::stream_ai_chat,
+            commands::ai::cancel_ai_request,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
