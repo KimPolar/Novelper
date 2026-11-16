@@ -3,6 +3,7 @@ pub mod commands;
 pub mod context;
 pub mod db;
 pub mod domain;
+pub mod export;
 
 use ai::manager::AIProviderManager;
 use db::AppState;
@@ -73,6 +74,8 @@ pub fn run() {
             commands::world::list_facts,
             commands::world::add_fact,
             commands::world::build_scene_context_cmd,
+            commands::export::export_manuscript,
+            commands::export::backup_active_project,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

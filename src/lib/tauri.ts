@@ -378,4 +378,9 @@ export const tauriApi = {
     query?: string;
     tokenBudget?: number;
   }) => invoke<BuiltContext>("build_scene_context_cmd", params),
+
+  // Export & Backup
+  exportManuscript: (format: "docx" | "epub" | "html" | "markdown") =>
+    invoke<string>("export_manuscript", { format }),
+  backupActiveProject: () => invoke<string>("backup_active_project"),
 };

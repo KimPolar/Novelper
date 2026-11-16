@@ -119,5 +119,11 @@
     "facts": "Grounded Facts & Conflicts",
     "add": "Add",
     "jumpToEvidence": "Jump to Evidence"
+  },
+  "export": {
+    "button": "Export / Backup",
+    "title": "Export Manuscript & Backup",
+    "backupNow": "Create Project DB Backup Now",
+    "done": "Saved to: "
   }
 }

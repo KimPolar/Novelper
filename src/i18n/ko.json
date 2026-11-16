@@ -119,5 +119,11 @@
     "facts": "확정 설정·충돌 근거",
     "add": "추가",
     "jumpToEvidence": "근거 장면으로 이동"
+  },
+  "export": {
+    "button": "내보내기 / 백업",
+    "title": "원고 내보내기 및 프로젝트 백업",
+    "backupNow": "지금 프로젝트 DB 백업 생성",
+    "done": "완료: "
   }
 }

@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { BookMarked, BookOpen, Cpu, Globe, History, Search, Sparkles, X } from "lucide-react";
+import { BookMarked, BookOpen, Cpu, Download, Globe, History, Search, Sparkles, X } from "lucide-react";
 import { AIAssistantDrawer } from "@/components/ai/AIAssistantDrawer";
 import { AISettingsModal } from "@/components/ai/AISettingsModal";
 import { NovelEditor } from "@/components/editor/NovelEditor";
 import { SearchModal } from "@/components/editor/SearchModal";
 import { VersionHistoryDrawer } from "@/components/editor/VersionHistoryDrawer";
+import { ExportModal } from "@/components/export/ExportModal";
 import { ProjectSidebar } from "@/components/tree/ProjectSidebar";
 import { WorldbuildingModal } from "@/components/world/WorldbuildingModal";
 import { useEditorUiStore } from "@/stores/editorUiStore";
@@ -22,6 +23,7 @@ export function App() {
   const [aiSettingsOpen, setAiSettingsOpen] = useState(false);
   const [aiDrawerOpen, setAiDrawerOpen] = useState(false);
   const [worldOpen, setWorldOpen] = useState(false);
+  const [exportOpen, setExportOpen] = useState(false);
 
   useEffect(() => {
     loadProjects();
@@ -101,6 +103,14 @@ export function App() {
             >
               <Sparkles className="h-3.5 w-3.5 text-amber-400" />
               <span>{t("aiPanel.button")}</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => setExportOpen(true)}
+              className="flex items-center gap-1.5 rounded-md border border-zinc-800 bg-zinc-900 px-2.5 py-1 text-xs text-zinc-300 hover:border-zinc-700 hover:bg-zinc-800 transition-colors"
+            >
+              <Download className="h-3.5 w-3.5" />
+              <span>{t("export.button")}</span>
             </button>
             <button
               type="button"
@@ -203,6 +213,10 @@ export function App() {
       <WorldbuildingModal
         open={worldOpen}
         onClose={() => setWorldOpen(false)}
+      />
+      <ExportModal
+        open={exportOpen}
+        onClose={() => setExportOpen(false)}
       />
     </div>
   );
