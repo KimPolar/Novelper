@@ -1,0 +1,25 @@
+{
+  "app": {
+    "name": "Novel Studio",
+    "subtitle": "Offline-first AI Novel Writing Studio"
+  },
+  "nav": {
+    "manuscript": "Manuscript",
+    "world": "Worldbuilding",
+    "aiChat": "AI Assistant",
+    "settings": "Settings"
+  },
+  "editor": {
+    "untitledScene": "Untitled Scene",
+    "placeholder": "Begin your story...",
+    "focusMode": "Focus Mode",
+    "typewriterMode": "Typewriter Mode",
+    "saved": "Saved",
+    "saving": "Saving..."
+  },
+  "language": {
+    "label": "Language",
+    "ko": "한국어",
+    "en": "English"
+  }
+}

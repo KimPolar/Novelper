@@ -1,0 +1,25 @@
+{
+  "app": {
+    "name": "소설도우미",
+    "subtitle": "Offline-first AI 소설 집필 스튜디오"
+  },
+  "nav": {
+    "manuscript": "원고",
+    "world": "설정집",
+    "aiChat": "AI 어시스턴트",
+    "settings": "설정"
+  },
+  "editor": {
+    "untitledScene": "제목 없는 장면",
+    "placeholder": "이야기를 시작하세요...",
+    "focusMode": "집중 모드",
+    "typewriterMode": "타자기 모드",
+    "saved": "저장됨",
+    "saving": "저장 중..."
+  },
+  "language": {
+    "label": "언어",
+    "ko": "한국어",
+    "en": "English"
+  }
+}

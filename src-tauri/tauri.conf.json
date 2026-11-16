@@ -1,0 +1,29 @@
+{
+  "$schema": "https://schema.tauri.dev/config/2",
+  "productName": "Novel Studio",
+  "version": "0.1.0",
+  "identifier": "com.novelstudio.app",
+  "build": {
+    "beforeDevCommand": "pnpm dev",
+    "devUrl": "http://localhost:1420",
+    "beforeBuildCommand": "pnpm build",
+    "frontendDist": "../dist"
+  },
+  "app": {
+    "windows": [
+      {
+        "title": "소설도우미 · Novel Studio",
+        "width": 1400,
+        "height": 900,
+        "minWidth": 1024,
+        "minHeight": 680
+      }
+    ],
+    "security": {
+      "csp": null
+    }
+  },
+  "bundle": {
+    "active": false
+  }
+}
